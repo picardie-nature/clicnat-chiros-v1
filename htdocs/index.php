@@ -31,6 +31,14 @@ class Chiros extends clicnat_smarty {
 		
 	}
 
+	public function template() {
+		return isset($_GET['t'])?trim($_GET['t']):'accueil';
+	}
+
+	public function before_accueil() {
+	
+	}
+
 	public function display() {
 		global $start_time;
 
@@ -43,7 +51,7 @@ class Chiros extends clicnat_smarty {
 		else
 			throw new Exception('404 Page introuvable');
 
-
+		parent::display($this->template().".tpl");
 	}
 }
 

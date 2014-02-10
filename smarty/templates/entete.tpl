@@ -19,3 +19,8 @@
 		{/literal}
 	</style>
 
+	{foreach from=$alertes item=alerte}
+	<div class="alert alert-{$alerte.classe}">
+		{$alerte.message}
+	</div>
+	{/foreach}

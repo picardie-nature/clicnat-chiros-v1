@@ -36,7 +36,22 @@ class Chiros extends clicnat_smarty {
 	}
 
 	public function before_accueil() {
-	
+		if (isset($_POST['clicnat_login']) && isset($_POST['clicnat_pwd'])) {
+			$utilisateur = bobs_utilisateur::by_login($this->db, trim($_POST['clicnat_login']));
+			if ($utilisateur->auth_ok(trim($_POST['clicnat_pwd']))) {
+				$_SESSION['id_utilisateur'] = $utilisateur->id_utilisateur;
+			} else {
+				$_SESSION['id_utilisateur'] = false;
+				$this->ajoute_alerte('danger', "Nom d'utilisateur ou mot de passe incorrect");
+			}
+			$this->redirect('?t=accueil');
+		} else {
+			if (isset($_GET['fermer'])) {
+				$_SESSION['id_utilisateur'] = false;
+				$this->ajoute_alerte('info', 'Vous êtes déconnecté');
+				$this->redirect('?t=accueil');
+			}
+		}
 	}
 
 	public function display() {
@@ -44,13 +59,27 @@ class Chiros extends clicnat_smarty {
 
 		session_start();
 
+		if (!isset($_SESSION['id_utilisateur']))
+			$_SESSION['id_utilisateur'] = false;
+
 		$this->assign('page', $this->template());
 		$before_func = 'before_'.$this->template();
-		if (method_exists($this, $before_func))
-			$this->$before_func();
-		else
-			throw new Exception('404 Page introuvable');
+		if (method_exists($this, $before_func)) {
+			if ($this->template() != 'accueil') {
+				if ($_SESSION['id_utilisateur'] == false) {
+					throw new Exception('vous devez être identifié');
+				}
+			}
 
+			if ($_SESSION['id_utilisateur']) 
+				$this->assign('utl', get_utilisateur($this->db, $_SESSION['id_utilisateur']));
+			else
+				$this->assign('utl', false);
+
+			$this->$before_func();
+		} else {
+			throw new Exception('404 Page introuvable');
+		}
 		parent::display($this->template().".tpl");
 	}
 }

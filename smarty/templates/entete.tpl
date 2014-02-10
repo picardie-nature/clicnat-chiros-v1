@@ -44,10 +44,8 @@
 				  </ul>
 				</li>
 				<li><a href="#">Carte des prospections</a></li>
-				
-				
 			  </ul>
-			  
+
 			  <ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
 				  <a href="#" class="dropdown-toggle" data-toggle="dropdown">{$utl} <b class="caret"></b></a>

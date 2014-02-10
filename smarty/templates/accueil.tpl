@@ -10,7 +10,7 @@
 		</form>
 	</div>
 	{else}
-		Bonjour {$utl}
+		Bonjour {$utl}, <a href="?fermer=1">Se deconnecter</a>
 	{/if}
 </div>
 {include file="pied.tpl"}

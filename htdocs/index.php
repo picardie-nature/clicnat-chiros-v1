@@ -44,6 +44,7 @@ class Chiros extends clicnat_smarty {
 			} else{
 				if ($utilisateur->auth_ok(trim($_POST['clicnat_pwd']))) {
 					$_SESSION['id_utilisateur'] = $utilisateur->id_utilisateur;
+					$this->ajoute_alerte('success', "Connexion réussie");
 				} else {
 					$_SESSION['id_utilisateur'] = false;
 					$this->ajoute_alerte('danger', "Nom d'utilisateur ou mot de passe incorrect");
@@ -53,7 +54,7 @@ class Chiros extends clicnat_smarty {
 		} else {
 			if (isset($_GET['fermer'])) {
 				$_SESSION['id_utilisateur'] = false;
-				$this->ajoute_alerte('info', 'Vous êtes déconnecté');
+				$this->ajoute_alerte('info', 'Vous êtes maintenant déconnecté');
 				$this->redirect('?t=accueil');
 			}
 		}

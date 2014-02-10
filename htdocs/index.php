@@ -38,13 +38,18 @@ class Chiros extends clicnat_smarty {
 	public function before_accueil() {
 		if (isset($_POST['clicnat_login']) && isset($_POST['clicnat_pwd'])) {
 			$utilisateur = bobs_utilisateur::by_login($this->db, trim($_POST['clicnat_login']));
-			if ($utilisateur->auth_ok(trim($_POST['clicnat_pwd']))) {
-				$_SESSION['id_utilisateur'] = $utilisateur->id_utilisateur;
-			} else {
+			if(!$utilisateur) {
 				$_SESSION['id_utilisateur'] = false;
 				$this->ajoute_alerte('danger', "Nom d'utilisateur ou mot de passe incorrect");
-			}
-			$this->redirect('?t=accueil');
+			} else{
+				if ($utilisateur->auth_ok(trim($_POST['clicnat_pwd']))) {
+					$_SESSION['id_utilisateur'] = $utilisateur->id_utilisateur;
+				} else {
+					$_SESSION['id_utilisateur'] = false;
+					$this->ajoute_alerte('danger', "Nom d'utilisateur ou mot de passe incorrect");
+				}
+				$this->redirect('?t=accueil');
+				}
 		} else {
 			if (isset($_GET['fermer'])) {
 				$_SESSION['id_utilisateur'] = false;

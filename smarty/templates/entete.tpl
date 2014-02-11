@@ -36,23 +36,23 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			  <ul class="nav navbar-nav">
 			  <li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Saisie <b class="caret"></b></a>
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Saisie</a>
 				  <ul class="dropdown-menu">
 					<li><a href="#">Prospection</a></li>
 					<li><a href="#">Acoustique</a></li>
 					<li><a href="#">Capture</a></li>
 				  </ul>
 				</li>
-				<li><a href="#">Carte des prospections</a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-search"></span> Carte des prospections</a></li>
 			  </ul>
 
 			  <ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown">{$utl} <b class="caret"></b></a>
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {$utl}</a>
 				  <ul class="dropdown-menu">
 					<li><a href="#">Mes infos</a></li>
 					<li class="divider"></li>
-					<li><a href="?fermer=1">Deconnexion</a></li>
+					<li><a href="?fermer=1">Deconnexion <span class="glyphicon glyphicon-off"></span></a></li>
 				  </ul>
 				</li>
 			  </ul>

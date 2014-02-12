@@ -38,17 +38,28 @@ class Chiros extends clicnat_smarty {
 	public function before_accueil() {
 		if (isset($_POST['clicnat_login']) && isset($_POST['clicnat_pwd'])) {
 			$utilisateur = bobs_utilisateur::by_login($this->db, trim($_POST['clicnat_login']));
-			if ($utilisateur->auth_ok(trim($_POST['clicnat_pwd']))) {
-				$_SESSION['id_utilisateur'] = $utilisateur->id_utilisateur;
-			} else {
+			if (!$utilisateur) {
 				$_SESSION['id_utilisateur'] = false;
 				$this->ajoute_alerte('danger', "Nom d'utilisateur ou mot de passe incorrect");
+			} else {
+				if (!$utilisateur->acces_chiros) {
+					$_SESSION['id_utilisateur'] = false;
+					$this->ajoute_alerte('danger', "Accès réservé aux membres du réseau Chiros");
+				} else {
+					if (!$utilisateur->auth_ok(trim($_POST['clicnat_pwd']))) {
+						$_SESSION['id_utilisateur'] = false;
+						$this->ajoute_alerte('danger', "Nom d'utilisateur ou mot de passe incorrect");
+					} else {
+						$_SESSION['id_utilisateur'] = $utilisateur->id_utilisateur;
+						$this->ajoute_alerte('success', "Connexion réussie");
+					}
+				}
 			}
 			$this->redirect('?t=accueil');
 		} else {
 			if (isset($_GET['fermer'])) {
 				$_SESSION['id_utilisateur'] = false;
-				$this->ajoute_alerte('info', 'Vous êtes déconnecté');
+				$this->ajoute_alerte('info', 'Vous êtes maintenant déconnecté');
 				$this->redirect('?t=accueil');
 			}
 		}

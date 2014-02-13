@@ -54,7 +54,6 @@ class Chiros extends clicnat_smarty {
 						$_SESSION['id_utilisateur'] = $utilisateur->id_utilisateur;
 						$this->ajoute_alerte('success', "Connexion réussie");
 					}
-					
 				}
 			}
 		$this->redirect('?t=accueil');
@@ -64,8 +63,10 @@ class Chiros extends clicnat_smarty {
 				$this->ajoute_alerte('info', 'Vous êtes maintenant déconnecté');
 				$this->redirect('?t=accueil');
 			}
+
+			$aprospecter = bobs_espace_chiro::get_list_a_prospecter($this->db);
+			$this->assign('aprospecter', $aprospecter);
 		}
-		
 	}
 
 	public function display() {
@@ -87,6 +88,7 @@ class Chiros extends clicnat_smarty {
 
 			if ($_SESSION['id_utilisateur']) 
 				$this->assign('utl', get_utilisateur($this->db, $_SESSION['id_utilisateur']));
+				
 			else
 				$this->assign('utl', false);
 

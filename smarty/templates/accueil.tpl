@@ -10,8 +10,14 @@
 		</form>
 	</div>
 	{else}
-		Bonjour {$utl}
+		Bonjour {$utl}<br>
 	{/if}
+	<table class="table table-striped" width=50%>
+	<thead><tr><th><b>Gîtes à prospecter</b></th></td></thead>
+		{foreach from=$aprospecter item=foo}
+			<tr><td>{$foo.reference}</tr></td>
+		{/foreach}
+	</table>
 </div>
 {include file="pied.tpl"}
 

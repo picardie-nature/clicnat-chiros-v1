@@ -16,6 +16,7 @@
 			padding: 15px;
 			margin: 0 auto;
 		}
+		body { padding-top: 70px; }
 		{/literal}
 	</style>
 	{if $utl}

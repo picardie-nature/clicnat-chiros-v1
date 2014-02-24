@@ -68,6 +68,20 @@ class Chiros extends clicnat_smarty {
 			$this->assign('aprospecter', $aprospecter);
 		}
 	}
+		protected function before_saisie_base() {
+		//$u = $this->get_user_session();
+		$observation = new bobs_observation($this->db, $_GET['id']);
+
+		if ($u->id_utilisateur != $observation->id_utilisateur) 
+			throw new Exception("Vous n'êtes pas l'auteur de cette observation");
+		if (!$observation->brouillard) 
+			throw new Exception("Cette observation a été envoyée et n'est plus modifiable");
+
+		$this->assign('masque', $_SESSION[SESS]['masque']);
+		$this->assign_by_ref('observation', $observation);
+		$this->assign_by_ref('s', get_config()->structures_ok_pour_saisie());
+		$this->assign_by_ref('p', get_config()->protocoles_en_cours());
+	}
 
 	public function display() {
 		global $start_time;

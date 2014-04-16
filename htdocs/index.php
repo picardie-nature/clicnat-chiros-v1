@@ -67,6 +67,11 @@ class Chiros extends clicnat_smarty {
 		}
 		
 	}
+	
+	protected function before_chiros_calendrier() {
+		$liste = bobs_calendrier::get_dates($this->db, 'espace_chiro');
+		//$this->assign_by_ref('dates', $liste);
+	}
 
 	public function display() {
 		global $start_time;
